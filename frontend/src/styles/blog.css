@@ -20,11 +20,54 @@
 }
 
 .blog-form input,
-.blog-form textarea {
+.blog-form textarea,
+.blog-form select {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 15px;
+}
+
+.cover-source-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.cover-source-options button {
+  padding: 10px;
+  border: 1px solid #dedff1;
+  border-radius: 8px;
+  background: #fff;
+  color: #5146d8;
+  cursor: pointer;
+  font: inherit;
+}
+
+.cover-source-options button.is-selected {
+  border-color: #6c4ce4;
+  background: #f5f4ff;
+  box-shadow: 0 0 0 2px rgb(108 76 228 / 12%);
+}
+
+.company-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.company-search button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.cover-image-preview {
+  width: 150px;
+  max-height: 150px;
+  object-fit: contain;
+  border: 1px solid #e8eaf0;
+  border-radius: 8px;
+  background: #f5f5f5;
 }
 
 .blog-form textarea {
@@ -44,4 +87,58 @@
 
 .blog-form button:hover {
   background: #5034bd;
+}
+
+.butterfly-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 34px;
+  height: 34px;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 5px rgb(73 52 165 / 28%));
+  transition: opacity 160ms ease;
+  will-change: transform, opacity;
+}
+
+.butterfly-cursor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.butterfly-wing-left {
+  transform-box: fill-box;
+  transform-origin: right center;
+  animation: butterfly-flap-left 420ms ease-in-out infinite alternate;
+}
+
+.butterfly-wing-right {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: butterfly-flap-right 420ms ease-in-out infinite alternate;
+}
+
+@keyframes butterfly-flap-left {
+  from { transform: rotate(-8deg) scaleX(1); }
+  to { transform: rotate(12deg) scaleX(0.82); }
+}
+
+@keyframes butterfly-flap-right {
+  from { transform: rotate(8deg) scaleX(1); }
+  to { transform: rotate(-12deg) scaleX(0.82); }
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .butterfly-cursor {
+    display: none;
+  }
+}
+
+.home-page--butterfly-active,
+.home-page--butterfly-active * {
+  cursor: none !important;
 }

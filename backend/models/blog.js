@@ -14,7 +14,28 @@ const blogSchema=Schema({
     createdBy:{
         type:Schema.Types.ObjectId,
         ref:'user',
-    }
+    },
+    likes:[{
+        type:Schema.Types.ObjectId,
+        ref:'user',
+    }],
+    comments:[{
+        user:{
+            type:Schema.Types.ObjectId,
+            ref:'user',
+            required:true,
+        },
+        body:{
+            type:String,
+            required:true,
+            trim:true,
+            maxlength:2000,
+        },
+        createdAt:{
+            type:Date,
+            default:Date.now,
+        },
+    }],
 },{timestamps:true});
 const Blog=model("blog",blogSchema);
 module.exports=Blog;

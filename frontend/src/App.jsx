@@ -7,6 +7,7 @@ import Login from './pages/UserLogin.jsx'
 import handleLogout from './utils/user.js'
 import Blog from './components/blog.jsx'
 import BlogDetails from './components/blogDetails.jsx'
+import EditBlog from './components/editBlog.jsx'
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isCheckingAuth, setIsCheckingAuth] = useState(true)
@@ -54,7 +55,8 @@ function App() {
            <Blog/>
           }
         />
-        <Route path="/blog/:id" element={<BlogDetails />} />
+        <Route path="/blog/:id" element={<BlogDetails user={user} />} />
+        <Route path="/blog/:id/edit" element={<EditBlog user={user} />} />
         <Route
           path="/home"
           element={
