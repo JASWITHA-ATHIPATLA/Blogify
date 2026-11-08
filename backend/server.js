@@ -25,7 +25,7 @@ app.use('/user',userRouter);
 app.use('/blog',blogRouter);
 
 async function startServer() {
-  await mongoose.connect('mongodb://localhost:27017/User')
+  await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/User')
 
   const port = process.env.PORT || 3003
   app.listen(port, () => {
