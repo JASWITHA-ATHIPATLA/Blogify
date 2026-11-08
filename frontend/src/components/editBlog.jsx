@@ -12,7 +12,7 @@ function EditBlog({ user }) {
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
-    axios.get(`http://localhost:3003/blog/${id}`)
+    axios.get(`/blog/${id}`)
       .then(({ data }) => setBlog(data.blog))
       .catch((requestError) => {
         console.error('Could not load blog:', requestError)
@@ -27,7 +27,7 @@ function EditBlog({ user }) {
 
     try {
       await axios.put(
-        `http://localhost:3003/blog/${id}`,
+        `/blog/${id}`,
         new FormData(event.currentTarget),
         { withCredentials: true }
       )

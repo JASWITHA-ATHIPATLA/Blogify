@@ -4,6 +4,13 @@ const { generateToken } = require('../utils/auth.js');
 const authenticateToken = require('../middleware/auth.js');
 
 const router = express.Router();
+const isProduction = process.env.NODE_ENV === 'production';
+const authCookieOptions = {
+    httpOnly: true,
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction,
+    path: '/',
+}
 
 router.get('/me', authenticateToken, (req, res) => {
     return res.status(200).json({
@@ -18,7 +25,7 @@ router.get('/me', authenticateToken, (req, res) => {
 })
 
 router.post('/logout', (req, res) => {
-    res.clearCookie('token', { path: '/' })
+    res.clearCookie('token', authCookieOptions)
     return res.status(200).json({ message: 'Logged out successfully' })
 })
 
@@ -56,11 +63,8 @@ router.post('/login', async (req, res, next) => {
 
     const token = generateToken(user)
     res.cookie('token', token, {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
+        ...authCookieOptions,
         maxAge: 3 * 24 * 60 * 60 * 1000,
-        path: '/',
     })
 
     return res.status(200).json({ message: 'Login successful' })

@@ -43,7 +43,7 @@ function CreateBlog() {
     setCompanySearchError("");
     setIsSearchingCompanies(true);
     try {
-      const { data } = await axios.get('http://localhost:3003/blog/companies/search', {
+      const { data } = await axios.get('/blog/companies/search', {
         params: { q: query },
         withCredentials: true,
       });
@@ -72,7 +72,7 @@ function CreateBlog() {
   try {
     // Modern Axios shortcut for multipart/form-data
     await axios.post(
-      'http://localhost:3003/blog/new-blog',
+      '/blog/new-blog',
       formData,
       { withCredentials: true }
     );

@@ -14,7 +14,7 @@ function BlogDetails({ user }) {
   const [isCommenting, setIsCommenting] = useState(false)
 
   useEffect(() => {
-    axios.get(`http://localhost:3003/blog/${id}`, {
+    axios.get(`/blog/${id}`, {
       withCredentials: true
     })
       .then(({ data }) => setBlog(data.blog))
@@ -35,8 +35,8 @@ function BlogDetails({ user }) {
     setIsLiking(true)
     try {
       const request = liked
-        ? axios.delete(`http://localhost:3003/blog/${id}/like`, { withCredentials: true })
-        : axios.put(`http://localhost:3003/blog/${id}/like`, {}, { withCredentials: true })
+        ? axios.delete(`/blog/${id}/like`, { withCredentials: true })
+        : axios.put(`/blog/${id}/like`, {}, { withCredentials: true })
       const { data } = await request
       setBlog((currentBlog) => ({ ...currentBlog, likes: data.likes }))
     } catch (error) {
@@ -53,7 +53,7 @@ function BlogDetails({ user }) {
     setIsCommenting(true)
     try {
       const { data } = await axios.post(
-        `http://localhost:3003/blog/${id}/comments`,
+        `/blog/${id}/comments`,
         { body: commentText },
         { withCredentials: true }
       )

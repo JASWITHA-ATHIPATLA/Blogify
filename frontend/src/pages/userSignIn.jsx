@@ -18,7 +18,7 @@ const navigate = useNavigate();
     const formData = new FormData(form)
 
     try {
-      const response = await axios.post('http://localhost:3003/user/signup', {
+      const response = await axios.post('/user/signup', {
         fullName: formData.get('fullName'),
         email: formData.get('email'),
         password: formData.get('password'),

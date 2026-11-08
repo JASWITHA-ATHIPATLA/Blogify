@@ -13,7 +13,7 @@ function Home({ user, onLogout }) {
   const butterflyRef = useRef(null)
 
   useEffect(() => {
-    axios.get('http://localhost:3003/blog', {
+    axios.get('/blog', {
       withCredentials: true
     })
       .then(({ data }) => setBlogs(data.blogs))

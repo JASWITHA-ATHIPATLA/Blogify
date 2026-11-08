@@ -16,7 +16,7 @@ function UserLogin({onLogin}) {
 
     try {
       const response = await axios.post(
-        'http://localhost:3003/user/login',
+        '/user/login',
         {
           email: email,
           password: password
@@ -25,7 +25,7 @@ function UserLogin({onLogin}) {
       )
       
       if (response.data.message === 'Login successful') {
-        const { data } = await axios.get('http://localhost:3003/user/me', { withCredentials: true })
+        const { data } = await axios.get('/user/me', { withCredentials: true })
         onLogin(data.user)
         navigate('/home', { replace: true })
       }

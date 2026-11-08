@@ -14,7 +14,7 @@ function App() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    axios.get('http://localhost:3003/user/me', { withCredentials: true })
+    axios.get('/user/me', { withCredentials: true })
       .then(({ data }) => {
         setUser(data.user)
         setIsAuthenticated(true)

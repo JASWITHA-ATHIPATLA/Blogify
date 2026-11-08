@@ -8,14 +8,17 @@ const cookieParser=require('cookie-parser');
 const path=require('node:path');
 const blogRouter=require('./routes/blog.js');
 
+const frontendOrigin = process.env.FRONTEND_URL
+  ? new URL(process.env.FRONTEND_URL).origin
+  : undefined
 
 app.use(cookieParser());
 app.use(express.json())
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    process.env.FRONTEND_URL
-  ],
+    frontendOrigin
+  ].filter(Boolean),
   credentials: true,
 }));
 app.use(express.static(path.join(__dirname, 'public')));
