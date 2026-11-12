@@ -14,7 +14,7 @@ function App() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    axios.get('`${import.meta.env.VITE_API_URL}/user/me`', { withCredentials: true })
+    axios.get('/user/me', { withCredentials: true })
       .then(({ data }) => {
         setUser(data.user)
         setIsAuthenticated(true)
