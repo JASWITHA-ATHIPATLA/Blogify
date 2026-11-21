@@ -93,7 +93,7 @@ function EditBlog({ user }) {
           <img
             src={resolveImageUrl(blog.coverImgURL)}
             alt={`Current cover for ${blog.title}`}
-            width="150"
+            className="cover-image-preview"
           />
         )}
         <input

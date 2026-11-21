@@ -29,7 +29,11 @@ function BlogCard({ blog }) {
           />
         ) : (
           <div className="blog-image-placeholder" aria-hidden="true">
-            <span>Blogify</span>
+            <svg viewBox="0 0 48 48" focusable="false">
+              <rect x="7" y="9" width="34" height="30" rx="5" />
+              <circle cx="18" cy="20" r="3" />
+              <path d="m11 34 9-9 6 6 5-5 7 8H11Z" />
+            </svg>
           </div>
         )}
       </div>
