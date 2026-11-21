@@ -74,7 +74,7 @@ router.post('/generate-draft', authenticateToken, async (req, res, next) => {
         body: JSON.stringify({
           systemInstruction: {
             parts: [{
-              text: 'Write an original, clear blog post draft from the user’s idea. Return a concise title and a helpful body of about 500 words. Do not include markdown fences.',
+              text: 'Write an original, clear blog post draft from the user idea. Return a concise title and a helpful body of about 500 words.',
             }],
           },
           contents: [{
@@ -83,6 +83,14 @@ router.post('/generate-draft', authenticateToken, async (req, res, next) => {
           }],
           generationConfig: {
             responseMimeType: 'application/json',
+            responseSchema: {
+              type: 'OBJECT',
+              properties: {
+                title: { type: 'STRING' },
+                body: { type: 'STRING' },
+              },
+              required: ['title', 'body'],
+            },
             maxOutputTokens: 2048,
           },
         }),

@@ -11,6 +11,9 @@ function CreateBlog() {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [coverSource, setCoverSource] = useState("device");
+  const [draftPrompt, setDraftPrompt] = useState("");
+  const [isGeneratingDraft, setIsGeneratingDraft] = useState(false);
+  const [draftError, setDraftError] = useState("");
   const [companyQuery, setCompanyQuery] = useState("");
   const [companies, setCompanies] = useState([]);
   const [selectedCompanyDomain, setSelectedCompanyDomain] = useState("");
@@ -31,6 +34,31 @@ function CreateBlog() {
 
   const handleImage = (e) => {
     setImage(e.target.files[0]);
+  };
+
+  const generateDraft = async () => {
+    const prompt = draftPrompt.trim();
+    if (!prompt) {
+      setDraftError("Enter a short idea for your blog.");
+      return;
+    }
+
+    setDraftError("");
+    setIsGeneratingDraft(true);
+    try {
+      const { data } = await axios.post(
+        "/blog/generate-draft",
+        { prompt },
+        { withCredentials: true }
+      );
+      setTitle(data.draft.title);
+      setBody(data.draft.body);
+    } catch (error) {
+      console.error("Draft generation failed:", error);
+      setDraftError(error.response?.data?.message ?? "Could not generate a draft.");
+    } finally {
+      setIsGeneratingDraft(false);
+    }
   };
 
   const searchCompanies = async () => {
@@ -89,6 +117,30 @@ function CreateBlog() {
       <h2>Create Blog</h2>
 
       <form onSubmit={handleSubmit}>
+        <div className="ai-draft-helper">
+          <label htmlFor="draftPrompt">Need a starting point? Describe your blog idea</label>
+          <textarea
+            id="draftPrompt"
+            value={draftPrompt}
+            maxLength={1000}
+            onChange={(event) => {
+              setDraftPrompt(event.target.value);
+              setDraftError("");
+            }}
+            placeholder="For example: How AI is changing healthcare"
+          />
+          <button
+            className="ai-draft-button"
+            type="button"
+            onClick={generateDraft}
+            disabled={isGeneratingDraft}
+          >
+            {isGeneratingDraft ? "Generating draft..." : "Generate draft with Gemini"}
+          </button>
+          {draftError && <p role="alert">{draftError}</p>}
+          <p>Review and edit the generated title and post before publishing.</p>
+        </div>
+
         <label>Title</label>
         <input
           type="text"
