@@ -88,6 +88,7 @@ function Home({ user, onLogout }) {
       />
 
       <main>
+        <h1 className="blog-showcase-heading">Latest Stories</h1>
         <div className="blog-container">
           {blogs.map((blog) => (
             <BlogCard key={blog._id} blog={blog} />
