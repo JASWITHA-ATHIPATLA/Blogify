@@ -73,6 +73,7 @@ function BlogDetails({ user }) {
         <img
           src={resolveImageUrl(blog.coverImgURL)}
           alt={blog.title}
+          className="blog-cover-image"
         />
       )}
 

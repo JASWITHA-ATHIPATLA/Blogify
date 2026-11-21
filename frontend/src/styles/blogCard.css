@@ -203,6 +203,12 @@
   background-color: #f5f5f5;
 }
 
+.blog-details > .blog-cover-image {
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
 .blog-details h1 {
   margin: 18px 0 12px;
   color: #172033;
