@@ -1,5 +1,5 @@
-const backendOrigin = import.meta.env.VITE_API_URL
+import apiBaseUrl from './apiBaseUrl.js'
 
 export default function resolveImageUrl(imagePath) {
-  return new URL(imagePath, backendOrigin).toString()
+  return new URL(imagePath, apiBaseUrl).toString()
 }
