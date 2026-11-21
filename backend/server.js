@@ -17,6 +17,7 @@ app.use(express.json())
 app.use(cors({
   origin: [
     'http://localhost:5173',
+    'https://blogify-brown-rho.vercel.app',
     frontendOrigin
   ].filter(Boolean),
   credentials: true,
