@@ -110,6 +110,14 @@
   background: #5034bd;
 }
 
+.blog-form .delete-blog-button {
+  background: #b42318;
+}
+
+.blog-form .delete-blog-button:hover {
+  background: #8f1c13;
+}
+
 .butterfly-cursor {
   position: fixed;
   top: 0;

@@ -10,6 +10,7 @@ function EditBlog({ user }) {
   const [blog, setBlog] = useState(null)
   const [error, setError] = useState('')
   const [isSaving, setIsSaving] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
     axios.get(`/blog/${id}`)
@@ -37,6 +38,24 @@ function EditBlog({ user }) {
       setError(requestError.response?.data?.message ?? 'Could not update the blog.')
     } finally {
       setIsSaving(false)
+    }
+  }
+
+  async function handleDelete() {
+    if (!window.confirm('Are you sure you want to delete this blog?')) {
+      return
+    }
+
+    setError('')
+    setIsDeleting(true)
+    try {
+      await axios.delete(`/blog/${id}`, { withCredentials: true })
+      navigate('/home', { replace: true })
+    } catch (requestError) {
+      console.error('Could not delete blog:', requestError)
+      setError(requestError.response?.data?.message ?? 'Could not delete the blog.')
+    } finally {
+      setIsDeleting(false)
     }
   }
 
@@ -85,10 +104,22 @@ function EditBlog({ user }) {
         />
 
         {error && <p role="alert">{error}</p>}
-        <button type="submit" disabled={isSaving}>
+        <button type="submit" disabled={isSaving || isDeleting}>
           {isSaving ? 'Saving...' : 'Save changes'}
         </button>
-        <button type="button" onClick={() => navigate(`/blog/${id}`)}>
+        <button
+          type="button"
+          className="delete-blog-button"
+          onClick={handleDelete}
+          disabled={isSaving || isDeleting}
+        >
+          {isDeleting ? 'Deleting...' : 'Delete blog'}
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate(`/blog/${id}`)}
+          disabled={isSaving || isDeleting}
+        >
           Cancel
         </button>
       </form>
