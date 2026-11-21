@@ -26,11 +26,6 @@
   animation: lightning-border 900ms steps(2, end) infinite;
 }
 
-.blog-card:nth-child(3n + 2):hover,
-.blog-card:nth-child(3n + 2):focus-visible {
-  transform: translateY(-17px) scale(1.05);
-}
-
 .blog-card:focus-visible {
   outline: 3px solid rgb(99 91 219 / 45%);
   outline-offset: 4px;
