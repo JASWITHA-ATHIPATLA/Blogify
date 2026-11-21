@@ -30,9 +30,9 @@ function BlogCard({ blog }) {
         ) : (
           <div className="blog-image-placeholder" aria-hidden="true">
             <svg viewBox="0 0 48 48" focusable="false">
-              <rect x="7" y="9" width="34" height="30" rx="5" />
-              <circle cx="18" cy="20" r="3" />
-              <path d="m11 34 9-9 6 6 5-5 7 8H11Z" />
+              <rect x="7" y="9" width="34" height="30" rx="5" fill="#c65cda" />
+              <circle cx="18" cy="20" r="3" fill="#f3d9fb" />
+              <path d="m11 34 9-9 6 6 5-5 7 8H11Z" fill="#f3d9fb" />
             </svg>
           </div>
         )}
