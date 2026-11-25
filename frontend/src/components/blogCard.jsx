@@ -4,6 +4,7 @@ import '../styles/blogCard.css'
 
 function BlogCard({ blog }) {
   const navigate = useNavigate()
+  const usesCompanyFavicon = blog.coverImgURL?.startsWith('https://www.google.com/s2/favicons')
   const openBlog = () => navigate(`/blog/${blog._id}`)
 
   return (
@@ -25,7 +26,7 @@ function BlogCard({ blog }) {
           <img
             src={resolveImageUrl(blog.coverImgURL)}
             alt={blog.title}
-            className="blog-image"
+            className={`blog-image${usesCompanyFavicon ? ' blog-image--company-logo' : ''}`}
           />
         ) : (
           <div className="blog-image-placeholder" aria-hidden="true">

@@ -22,6 +22,7 @@ app.use(cors({
   ].filter(Boolean),
   credentials: true,
 }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // app.set('view engine','ejs');

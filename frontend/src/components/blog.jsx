@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import "../styles/blog.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 function CreateBlog() {
   const navigate = useNavigate();
@@ -14,6 +16,7 @@ function CreateBlog() {
   const [draftPrompt, setDraftPrompt] = useState("");
   const [isGeneratingDraft, setIsGeneratingDraft] = useState(false);
   const [draftError, setDraftError] = useState("");
+  const [hasGeneratedDraft, setHasGeneratedDraft] = useState(false);
   const [companyQuery, setCompanyQuery] = useState("");
   const [companies, setCompanies] = useState([]);
   const [selectedCompanyDomain, setSelectedCompanyDomain] = useState("");
@@ -53,6 +56,7 @@ function CreateBlog() {
       );
       setTitle(data.draft.title);
       setBody(data.draft.body);
+      setHasGeneratedDraft(true);
     } catch (error) {
       console.error("Draft generation failed:", error);
       setDraftError(error.response?.data?.message ?? "Could not generate a draft.");
@@ -135,11 +139,23 @@ function CreateBlog() {
             onClick={generateDraft}
             disabled={isGeneratingDraft}
           >
-            {isGeneratingDraft ? "Generating draft..." : "Generate draft with Gemini"}
+            {isGeneratingDraft ? "Generating draft..." : "Generate draft with Grok"}
           </button>
           {draftError && <p role="alert">{draftError}</p>}
-          <p>Review and edit the generated title and post before publishing.</p>
+          <p>Review the preview, then edit the title and post below before publishing.</p>
         </div>
+
+        {hasGeneratedDraft && (
+          <section className="generated-draft-preview" aria-live="polite">
+            <h3>Draft preview</h3>
+            <h4>{title}</h4>
+            <article className="generated-draft-preview-content">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {body}
+              </ReactMarkdown>
+            </article>
+          </section>
+        )}
 
         <label>Title</label>
         <input
@@ -252,11 +268,16 @@ function CreateBlog() {
                 <p>No companies found. Try a different name.</p>
               )}
             {selectedCompany && (
-              <img
-                src={selectedCompany.logoUrl}
-                alt={`${selectedCompany.name} logo preview`}
-                className="cover-image-preview"
-              />
+              <>
+                <img
+                  src={selectedCompany.logoUrl}
+                  alt={`${selectedCompany.name} logo preview`}
+                  className="cover-image-preview"
+                />
+                <p className="company-logo-quality-hint">
+                  Company search uses small website icons and may look blurry. For a sharper full logo, upload a high-resolution image from your device.
+                </p>
+              </>
             )}
           </>
         )}

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import resolveImageUrl from '../utils/resolveImageUrl.js'
 import '../styles/blogCard.css'
 
@@ -12,6 +14,7 @@ function BlogDetails({ user }) {
   const [actionError, setActionError] = useState('')
   const [isLiking, setIsLiking] = useState(false)
   const [isCommenting, setIsCommenting] = useState(false)
+  const usesCompanyFavicon = blog?.coverImgURL?.startsWith('https://www.google.com/s2/favicons')
 
   useEffect(() => {
     axios.get(`/blog/${id}`, {
@@ -73,12 +76,16 @@ function BlogDetails({ user }) {
         <img
           src={resolveImageUrl(blog.coverImgURL)}
           alt={blog.title}
-          className="blog-cover-image"
+          className={`blog-cover-image${usesCompanyFavicon ? ' blog-cover-image--company-logo' : ''}`}
         />
       )}
 
       <h1>{blog.title}</h1>
-      <p>{blog.body}</p>
+      <article className="blog-body-content">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {blog.body}
+        </ReactMarkdown>
+      </article>
       <div className="blog-author">
         <img
           src={resolveImageUrl(blog.createdBy?.profileImageURL || '/images/default.png')}
